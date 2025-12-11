@@ -24,6 +24,8 @@ namespace CodeJam5b.Server.Controllers
         
         [Range(0, 1000, ErrorMessage = "Protein must be between 0 and 1000")]
         public int Protein { get; set; }
+        
+        public string? DateTime { get; set; }
     }
 
     [ApiController]
@@ -44,7 +46,32 @@ namespace CodeJam5b.Server.Controllers
                 Calories = m.Calories,
                 Carbs = m.Carbs,
                 Fat = m.Fat,
-                Protein = m.Protein
+                Protein = m.Protein,
+                DateTime = null
+            }).ToList();
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<MealEntry>>> SearchByName([FromQuery] string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return await GetAll();
+            }
+
+            var meals = await _db.Meals
+                .Where(m => m.MealName.ToLower().Contains(name.ToLower()))
+                .ToListAsync();
+                
+            return meals.Select(m => new MealEntry
+            {
+                Id = m.MealId,
+                Name = m.MealName,
+                Calories = m.Calories,
+                Carbs = m.Carbs,
+                Fat = m.Fat,
+                Protein = m.Protein,
+                DateTime = null
             }).ToList();
         }
 
@@ -61,7 +88,8 @@ namespace CodeJam5b.Server.Controllers
                 Calories = meal.Calories,
                 Carbs = meal.Carbs,
                 Fat = meal.Fat,
-                Protein = meal.Protein
+                Protein = meal.Protein,
+                DateTime = null
             };
         }
 

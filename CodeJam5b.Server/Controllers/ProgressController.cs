@@ -17,16 +17,16 @@ namespace CodeJam5b.Server.Controllers
         public int TargetWeight { get; set; }
         
         [Range(0, 10000, ErrorMessage = "Target calories must be between 0 and 10000")]
-        public int TargetCals { get; set; }
+        public int TargetDailyCalories { get; set; }
         
         [Range(0, 1000, ErrorMessage = "Target carbs must be between 0 and 1000")]
-        public int TargetCarbs { get; set; }
+        public int TargetDailyCarbs { get; set; }
         
         [Range(0, 1000, ErrorMessage = "Target fat must be between 0 and 1000")]
-        public int TargetFat { get; set; }
+        public int TargetDailyFat { get; set; }
         
         [Range(0, 1000, ErrorMessage = "Target protein must be between 0 and 1000")]
-        public int TargetProtein { get; set; }
+        public int TargetDailyProtein { get; set; }
     }
 
     [ApiController]
@@ -47,10 +47,10 @@ namespace CodeJam5b.Server.Controllers
                 Id = progress.ProgressId,
                 CurrentWeight = progress.CurrentWeight,
                 TargetWeight = progress.TargetWeight,
-                TargetCals = progress.TargetCals,
-                TargetCarbs = progress.TargetCarbs,
-                TargetFat = progress.TargetFat,
-                TargetProtein = progress.TargetProtein
+                TargetDailyCalories = progress.TargetCals,
+                TargetDailyCarbs = progress.TargetCarbs,
+                TargetDailyFat = progress.TargetFat,
+                TargetDailyProtein = progress.TargetProtein
             };
         }
 
@@ -66,10 +66,10 @@ namespace CodeJam5b.Server.Controllers
                     ProgressId = Guid.NewGuid().ToString(),
                     CurrentWeight = body.CurrentWeight,
                     TargetWeight = body.TargetWeight,
-                    TargetCals = body.TargetCals,
-                    TargetCarbs = body.TargetCarbs,
-                    TargetFat = body.TargetFat,
-                    TargetProtein = body.TargetProtein
+                    TargetCals = body.TargetDailyCalories,
+                    TargetCarbs = body.TargetDailyCarbs,
+                    TargetFat = body.TargetDailyFat,
+                    TargetProtein = body.TargetDailyProtein
                 };
                 _db.Progress.Add(progress);
             }
@@ -77,10 +77,10 @@ namespace CodeJam5b.Server.Controllers
             {
                 progress.CurrentWeight = body.CurrentWeight;
                 progress.TargetWeight = body.TargetWeight;
-                progress.TargetCals = body.TargetCals;
-                progress.TargetCarbs = body.TargetCarbs;
-                progress.TargetFat = body.TargetFat;
-                progress.TargetProtein = body.TargetProtein;
+                progress.TargetCals = body.TargetDailyCalories;
+                progress.TargetCarbs = body.TargetDailyCarbs;
+                progress.TargetFat = body.TargetDailyFat;
+                progress.TargetProtein = body.TargetDailyProtein;
             }
             
             await _db.SaveChangesAsync();
