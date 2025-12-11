@@ -18,17 +18,12 @@ function SearchMeal() {
     setError(null);
 
     try {
-      // TODO: Replace with your actual API endpoint
-      // const response = await fetch(`/api/meals/search?name=${encodeURIComponent(searchQuery)}`);
-      // if (!response.ok) {
-      //   throw new Error('Failed to fetch meals');
-      // }
-      // const data = await response.json();
-      // setSearchResults(data);
-
-      // Placeholder for testing - remove when API is ready
-      console.log('Searching for:', searchQuery);
-      setSearchResults([]);
+      const response = await fetch(`/api/meals/search?name=${encodeURIComponent(searchQuery)}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch meals');
+      }
+      const data = await response.json();
+      setSearchResults(data);
       
     } catch (err) {
       setError(err.message);

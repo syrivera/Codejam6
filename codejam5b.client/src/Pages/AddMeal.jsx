@@ -19,7 +19,7 @@ function AddMeal() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Convert string values to integers for numeric fields
@@ -32,18 +32,37 @@ function AddMeal() {
       dateTime: mealData.dateTime
     };
     
-    console.log('Meal submitted:', formattedData);
-    // Add your API call or data handling here
-    
-    // Reset form
-    setMealData({
-      name: '',
-      carbs: '',
-      protein: '',
-      calories: '',
-      fat: '',
-      dateTime: new Date().toISOString().slice(0, 16)
-    });
+    try {
+      const response = await fetch('/api/meals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formattedData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add meal');
+      }
+
+      const result = await response.json();
+      console.log('Meal added successfully:', result);
+      
+      // Reset form
+      setMealData({
+        name: '',
+        carbs: '',
+        protein: '',
+        calories: '',
+        fat: '',
+        dateTime: new Date().toISOString().slice(0, 16)
+      });
+
+      alert('Meal added successfully!');
+    } catch (error) {
+      console.error('Error adding meal:', error);
+      alert('Failed to add meal. Please try again.');
+    }
   };
 
   return (

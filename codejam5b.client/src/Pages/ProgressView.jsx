@@ -15,23 +15,12 @@ function ProgressView() {
     setError(null);
 
     try {
-      // TODO: Replace with your actual API endpoint
-      // const response = await fetch('/api/progress');
-      // if (!response.ok) {
-      //   throw new Error('Failed to fetch progress data');
-      // }
-      // const data = await response.json();
-      // setProgressData(data);
-
-      // Placeholder data for testing - remove when API is ready
-      setProgressData({
-        currentWeight: 180,
-        targetWeight: 165,
-        targetDailyCalories: 2000,
-        targetDailyCarbs: 200,
-        targetDailyFat: 65,
-        targetDailyProtein: 150
-      });
+      const response = await fetch('/api/progress');
+      if (!response.ok) {
+        throw new Error('Failed to fetch progress data');
+      }
+      const data = await response.json();
+      setProgressData(data);
       
     } catch (err) {
       setError(err.message);
