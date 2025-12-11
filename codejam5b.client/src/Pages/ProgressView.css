@@ -139,12 +139,13 @@
 .target-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   padding: 1rem;
   background-color: white;
   border-radius: 6px;
   border-left: 4px solid #ddd;
   transition: transform 0.2s;
+  gap: 0.5rem;
 }
 
 .target-item:hover {
@@ -155,24 +156,89 @@
   border-left-color: #FF6B6B;
 }
 
+.target-item.calories .progress-bar {
+  background: linear-gradient(90deg, #FF6B6B, #FF8E8E);
+}
+
 .target-item.protein {
   border-left-color: #4ECDC4;
+}
+
+.target-item.protein .progress-bar {
+  background: linear-gradient(90deg, #4ECDC4, #7FE0D8);
 }
 
 .target-item.carbs {
   border-left-color: #FFE66D;
 }
 
+.target-item.carbs .progress-bar {
+  background: linear-gradient(90deg, #FFE66D, #FFEF99);
+}
+
 .target-item.fat {
   border-left-color: #A8E6CF;
+}
+
+.target-item.fat .progress-bar {
+  background: linear-gradient(90deg, #A8E6CF, #C4F0DF);
 }
 
 .target-label {
   font-size: 0.85rem;
   color: #888;
-  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.target-values {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.target-values .consumed {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.target-values .separator {
+  color: #999;
+  font-weight: 500;
+}
+
+.target-values .target {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.remaining {
+  font-size: 0.75rem;
+  color: #888;
+  text-align: center;
+  margin-top: 0.25rem;
 }
 
 .target-value {

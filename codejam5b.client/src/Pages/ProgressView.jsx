@@ -64,6 +64,15 @@ function ProgressView() {
   const weightDifference = progressData.currentWeight - progressData.targetWeight;
   const weightProgress = weightDifference > 0 ? 'to lose' : 'to gain';
 
+  // Calculate percentages for progress bars
+  const calcPercentage = (consumed, target) => Math.min((consumed / target) * 100, 100);
+  const calcRemaining = (consumed, target) => Math.max(target - consumed, 0);
+
+  const caloriesPercent = calcPercentage(progressData.consumedCalories, progressData.targetDailyCalories);
+  const carbsPercent = calcPercentage(progressData.consumedCarbs, progressData.targetDailyCarbs);
+  const fatPercent = calcPercentage(progressData.consumedFat, progressData.targetDailyFat);
+  const proteinPercent = calcPercentage(progressData.consumedProtein, progressData.targetDailyProtein);
+
   return (
     <div className="progress-view-container">
       <h2>Progress Stats</h2>
@@ -92,28 +101,56 @@ function ProgressView() {
 
         <div className="stat-card">
           <div className="stat-header">
-            <h3>Daily Targets</h3>
+            <h3>Today's Nutrition</h3>
           </div>
           <div className="targets-grid">
             <div className="target-item calories">
               <span className="target-label">Calories</span>
-              <span className="target-value">{progressData.targetDailyCalories}</span>
-              <span className="target-unit">kcal</span>
+              <div className="progress-bar-container">
+                <div className="progress-bar" style={{width: `${caloriesPercent}%`}}></div>
+              </div>
+              <div className="target-values">
+                <span className="consumed">{progressData.consumedCalories}</span>
+                <span className="separator">/</span>
+                <span className="target">{progressData.targetDailyCalories} kcal</span>
+              </div>
+              <span className="remaining">{calcRemaining(progressData.consumedCalories, progressData.targetDailyCalories)} kcal left</span>
             </div>
             <div className="target-item protein">
               <span className="target-label">Protein</span>
-              <span className="target-value">{progressData.targetDailyProtein}</span>
-              <span className="target-unit">g</span>
+              <div className="progress-bar-container">
+                <div className="progress-bar" style={{width: `${proteinPercent}%`}}></div>
+              </div>
+              <div className="target-values">
+                <span className="consumed">{progressData.consumedProtein}</span>
+                <span className="separator">/</span>
+                <span className="target">{progressData.targetDailyProtein} g</span>
+              </div>
+              <span className="remaining">{calcRemaining(progressData.consumedProtein, progressData.targetDailyProtein)} g left</span>
             </div>
             <div className="target-item carbs">
               <span className="target-label">Carbs</span>
-              <span className="target-value">{progressData.targetDailyCarbs}</span>
-              <span className="target-unit">g</span>
+              <div className="progress-bar-container">
+                <div className="progress-bar" style={{width: `${carbsPercent}%`}}></div>
+              </div>
+              <div className="target-values">
+                <span className="consumed">{progressData.consumedCarbs}</span>
+                <span className="separator">/</span>
+                <span className="target">{progressData.targetDailyCarbs} g</span>
+              </div>
+              <span className="remaining">{calcRemaining(progressData.consumedCarbs, progressData.targetDailyCarbs)} g left</span>
             </div>
             <div className="target-item fat">
               <span className="target-label">Fat</span>
-              <span className="target-value">{progressData.targetDailyFat}</span>
-              <span className="target-unit">g</span>
+              <div className="progress-bar-container">
+                <div className="progress-bar" style={{width: `${fatPercent}%`}}></div>
+              </div>
+              <div className="target-values">
+                <span className="consumed">{progressData.consumedFat}</span>
+                <span className="separator">/</span>
+                <span className="target">{progressData.targetDailyFat} g</span>
+              </div>
+              <span className="remaining">{calcRemaining(progressData.consumedFat, progressData.targetDailyFat)} g left</span>
             </div>
           </div>
         </div>

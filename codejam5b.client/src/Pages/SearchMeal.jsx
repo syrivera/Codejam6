@@ -6,6 +6,41 @@ function SearchMeal() {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [addingMealId, setAddingMealId] = useState(null);
+
+  const handleAddMeal = async (meal) => {
+    setAddingMealId(meal.mealId);
+    
+    try {
+      // Update progress with the meal nutrients
+      const progressResponse = await fetch('/api/progress/add-meal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          calories: meal.calories,
+          carbs: meal.carbs,
+          fat: meal.fat,
+          protein: meal.protein
+        })
+      });
+
+      if (!progressResponse.ok) {
+        throw new Error('Failed to update progress');
+      }
+
+      const progressData = await progressResponse.json();
+      console.log('Progress updated:', progressData);
+      alert(`${meal.name} added to your daily intake!`);
+      
+    } catch (error) {
+      console.error('Error adding meal:', error);
+      alert('Failed to add meal to progress. Please try again.');
+    } finally {
+      setAddingMealId(null);
+    }
+  };
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -95,11 +130,13 @@ function SearchMeal() {
                   <span><strong>Carbs:</strong> {meal.carbs}g</span>
                   <span><strong>Fat:</strong> {meal.fat}g</span>
                 </div>
-                {meal.dateTime && (
-                  <p className="meal-date">
-                    {new Date(meal.dateTime).toLocaleString()}
-                  </p>
-                )}
+                <button 
+                  className="add-meal-btn"
+                  onClick={() => handleAddMeal(meal)}
+                  disabled={addingMealId === meal.mealId}
+                >
+                  {addingMealId === meal.mealId ? 'Adding...' : 'Add to Today'}
+                </button>
               </div>
             ))}
           </div>

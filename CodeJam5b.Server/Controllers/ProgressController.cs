@@ -27,6 +27,21 @@ namespace CodeJam5b.Server.Controllers
         
         [Range(0, 1000, ErrorMessage = "Target protein must be between 0 and 1000")]
         public int TargetDailyProtein { get; set; }
+
+        // Current day consumed values
+        public int ConsumedCalories { get; set; }
+        public int ConsumedCarbs { get; set; }
+        public int ConsumedFat { get; set; }
+        public int ConsumedProtein { get; set; }
+        public DateTime LastUpdated { get; set; }
+    }
+
+    public class AddMealNutrientsRequest
+    {
+        public int Calories { get; set; }
+        public int Carbs { get; set; }
+        public int Fat { get; set; }
+        public int Protein { get; set; }
     }
 
     [ApiController]
@@ -42,6 +57,18 @@ namespace CodeJam5b.Server.Controllers
             var progress = await _db.Progress.FirstOrDefaultAsync();
             if (progress is null) return NotFound();
             
+            // Reset consumed values if it's a new day
+            var today = DateTime.UtcNow.Date;
+            if (progress.LastUpdated.Date != today)
+            {
+                progress.ConsumedCalories = 0;
+                progress.ConsumedCarbs = 0;
+                progress.ConsumedFat = 0;
+                progress.ConsumedProtein = 0;
+                progress.LastUpdated = DateTime.UtcNow;
+                await _db.SaveChangesAsync();
+            }
+            
             return new ProgressData
             {
                 Id = progress.ProgressId,
@@ -50,7 +77,12 @@ namespace CodeJam5b.Server.Controllers
                 TargetDailyCalories = progress.TargetCals,
                 TargetDailyCarbs = progress.TargetCarbs,
                 TargetDailyFat = progress.TargetFat,
-                TargetDailyProtein = progress.TargetProtein
+                TargetDailyProtein = progress.TargetProtein,
+                ConsumedCalories = progress.ConsumedCalories,
+                ConsumedCarbs = progress.ConsumedCarbs,
+                ConsumedFat = progress.ConsumedFat,
+                ConsumedProtein = progress.ConsumedProtein,
+                LastUpdated = progress.LastUpdated
             };
         }
 
@@ -85,6 +117,48 @@ namespace CodeJam5b.Server.Controllers
             
             await _db.SaveChangesAsync();
             return NoContent();
+        }
+
+        [HttpPost("add-meal")]
+        public async Task<ActionResult<ProgressData>> AddMealNutrients(AddMealNutrientsRequest body)
+        {
+            var progress = await _db.Progress.FirstOrDefaultAsync();
+            if (progress is null) return NotFound("Progress record not found");
+
+            // Reset consumed values if it's a new day
+            var today = DateTime.UtcNow.Date;
+            if (progress.LastUpdated.Date != today)
+            {
+                progress.ConsumedCalories = 0;
+                progress.ConsumedCarbs = 0;
+                progress.ConsumedFat = 0;
+                progress.ConsumedProtein = 0;
+            }
+
+            // Add the meal nutrients to consumed totals
+            progress.ConsumedCalories += body.Calories;
+            progress.ConsumedCarbs += body.Carbs;
+            progress.ConsumedFat += body.Fat;
+            progress.ConsumedProtein += body.Protein;
+            progress.LastUpdated = DateTime.UtcNow;
+
+            await _db.SaveChangesAsync();
+
+            return new ProgressData
+            {
+                Id = progress.ProgressId,
+                CurrentWeight = progress.CurrentWeight,
+                TargetWeight = progress.TargetWeight,
+                TargetDailyCalories = progress.TargetCals,
+                TargetDailyCarbs = progress.TargetCarbs,
+                TargetDailyFat = progress.TargetFat,
+                TargetDailyProtein = progress.TargetProtein,
+                ConsumedCalories = progress.ConsumedCalories,
+                ConsumedCarbs = progress.ConsumedCarbs,
+                ConsumedFat = progress.ConsumedFat,
+                ConsumedProtein = progress.ConsumedProtein,
+                LastUpdated = progress.LastUpdated
+            };
         }
     }
 }

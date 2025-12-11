@@ -47,6 +47,30 @@ function AddMeal() {
 
       const result = await response.json();
       console.log('Meal added successfully:', result);
+
+      // Update user progress with the meal nutrients
+      try {
+        const progressResponse = await fetch('/api/progress/add-meal', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            calories: formattedData.calories,
+            carbs: formattedData.carbs,
+            fat: formattedData.fat,
+            protein: formattedData.protein
+          })
+        });
+
+        if (progressResponse.ok) {
+          const progressData = await progressResponse.json();
+          console.log('Progress updated:', progressData);
+        }
+      } catch (progressError) {
+        console.error('Error updating progress:', progressError);
+        // Don't fail the whole operation if progress update fails
+      }
       
       // Reset form
       setMealData({

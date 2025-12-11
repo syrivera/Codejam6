@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeJam5b.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a40ab8cadfe139be9d5bb792be4be33268cfd17b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+94ab4a536b585f6ef36d93aca7493adcd9a302e2")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeJam5b.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeJam5b.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

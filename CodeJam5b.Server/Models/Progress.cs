@@ -29,5 +29,20 @@ namespace CodeJam5b.Models
         [Column("target_protein")]
         public int TargetProtein { get; set; }
 
+        [Column("consumed_calories")]
+        public int ConsumedCalories { get; set; }
+
+        [Column("consumed_carbs")]
+        public int ConsumedCarbs { get; set; }
+
+        [Column("consumed_fat")]
+        public int ConsumedFat { get; set; }
+
+        [Column("consumed_protein")]
+        public int ConsumedProtein { get; set; }
+
+        [Column("last_updated")]
+        public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+
     }
 }
