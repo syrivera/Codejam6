@@ -38,7 +38,7 @@ public class MealsFunctions
         return ok;
     }
 
-    private record CreateMealRequest(string Name, int Calories, DateTime Date);
+    private record CreateMealRequest(string name, int calories, DateTime date);
 
     [Function("MealsCreate")]
     public async Task<HttpResponseData> MealsCreate(
@@ -56,7 +56,7 @@ public class MealsFunctions
             body = null;
         }
 
-        if (body is null || string.IsNullOrWhiteSpace(body.Name) || body.Calories < 0)
+        if (body is null || string.IsNullOrWhiteSpace(body.name) || body.calories < 0)
         {
             var bad = req.CreateResponse(HttpStatusCode.BadRequest);
             await bad.WriteStringAsync("Body must include Name, Calories, Date.");
@@ -65,9 +65,9 @@ public class MealsFunctions
 
         var meal = new Meal
         {
-            name = body.Name.Trim(),
-            calories = body.Calories,
-            date = body.Date == default ? DateTime.Today : body.Date
+            name = body.name.Trim(),
+            calories = body.calories,
+            date = body.date == default ? DateTime.Today : body.Date
         };
 
         _db.meals.Add(meal);

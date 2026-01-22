@@ -13,7 +13,7 @@ function SearchMeal() {
     
     try {
       // Update progress with the meal nutrients
-      const progressResponse = await fetch('/api/progress/add-meal', {
+      const progressResponse = await fetch('/api/progress', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
