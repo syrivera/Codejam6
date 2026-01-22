@@ -130,126 +130,221 @@
   font-weight: 600;
 }
 
-.targets-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.target-item {
+// Clean Progress Bars 
+.progress-list {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 6px;
-  border-left: 4px solid #ddd;
-  transition: transform 0.2s;
+  gap: 1.5rem;
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
-.target-item:hover {
-  transform: translateY(-2px);
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
-.target-item.calories {
-  border-left-color: #FF6B6B;
-}
-
-.target-item.calories .progress-bar {
-  background: linear-gradient(90deg, #FF6B6B, #FF8E8E);
-}
-
-.target-item.protein {
-  border-left-color: #4ECDC4;
-}
-
-.target-item.protein .progress-bar {
-  background: linear-gradient(90deg, #4ECDC4, #7FE0D8);
-}
-
-.target-item.carbs {
-  border-left-color: #FFE66D;
-}
-
-.target-item.carbs .progress-bar {
-  background: linear-gradient(90deg, #FFE66D, #FFEF99);
-}
-
-.target-item.fat {
-  border-left-color: #A8E6CF;
-}
-
-.target-item.fat .progress-bar {
-  background: linear-gradient(90deg, #A8E6CF, #C4F0DF);
-}
-
-.target-label {
-  font-size: 0.85rem;
-  color: #888;
+.progress-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: 600;
+}
+
+.progress-values {
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.progress-bar-wrapper {
+  width: 100%;
+  height: 12px;
+  background-color: #e8e8e8;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+  position: relative;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+/* Modify Goals Section */
+.modify-goals-section {
+  margin-top: 1.5rem;
   text-align: center;
 }
 
-.progress-bar-container {
-  width: 100%;
-  height: 8px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 0.5rem 0;
+.modify-goals-btn {
+  padding: 0.875rem 2rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
 }
 
-.progress-bar {
-  height: 100%;
-  border-radius: 10px;
-  transition: width 0.5s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.modify-goals-btn:hover {
+  background-color: #45a049;
 }
 
-.target-values {
+.modify-goals-btn:active {
+  transform: translateY(1px);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
-  align-items: baseline;
-  gap: 0.25rem;
-  font-size: 1.1rem;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s;
 }
 
-.target-values .consumed {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.target-values .separator {
-  color: #999;
-  font-weight: 500;
+.modal-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s;
 }
 
-.target-values .target {
-  font-size: 1rem;
-  color: #666;
-  font-weight: 500;
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.remaining {
-  font-size: 0.75rem;
-  color: #888;
+.modal-content h3 {
+  margin: 0 0 1.5rem 0;
+  color: white;
   text-align: center;
-  margin-top: 0.25rem;
+  font-size: 1.5rem;
 }
 
-.target-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #333;
-  line-height: 1;
+.form-section {
+  margin-bottom: 1.5rem;
 }
 
-.target-unit {
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 0.25rem;
+.form-section h4 {
+  margin: 0 0 1rem 0;
+  color: white;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  color: white-smoke;
+  font-weight: 600;
+}
+
+.form-row input {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.cancel-btn, .save-btn {
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancel-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.save-btn {
+  background-color: #4CAF50;
+  color: white;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
+
+.save-btn:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }

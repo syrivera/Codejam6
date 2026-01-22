@@ -34,6 +34,8 @@ function SearchMeal() {
       console.log('Progress updated:', progressData);
       alert(`${meal.name} added to your daily intake!`);
       
+      window.dispatchEvent(new Event('mealAdded'));
+      
     } catch (error) {
       console.error('Error adding meal:', error);
       alert('Failed to add meal to progress. Please try again.');

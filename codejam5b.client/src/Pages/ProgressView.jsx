@@ -5,13 +5,34 @@ function ProgressView() {
   const [progressData, setProgressData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    currentWeight: 0,
+    targetWeight: 0,
+    targetDailyCalories: 0,
+    targetDailyCarbs: 0,
+    targetDailyFat: 0,
+    targetDailyProtein: 0
+  });
 
   useEffect(() => {
     fetchProgressData();
+
+    const intervalId = setInterval(fetchProgressData, 10000);
+    
+    const handleMealAdded = () => fetchProgressData();
+    window.addEventListener('mealAdded', handleMealAdded);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('mealAdded', handleMealAdded);
+    };
   }, []);
 
   const fetchProgressData = async () => {
-    setIsLoading(true);
+    if (!progressData) {
+      setIsLoading(true);
+    }
     setError(null);
 
     try {
@@ -26,6 +47,49 @@ function ProgressView() {
       setError(err.message);
     } finally {
       setIsLoading(false);
+    }
+  };
+//modify stats 
+  const handleModifyGoals = () => {
+    setFormData({
+      currentWeight: progressData.currentWeight,
+      targetWeight: progressData.targetWeight,
+      targetDailyCalories: progressData.targetDailyCalories,
+      targetDailyCarbs: progressData.targetDailyCarbs,
+      targetDailyFat: progressData.targetDailyFat,
+      targetDailyProtein: progressData.targetDailyProtein
+    });
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: parseInt(value) || 0 }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch('/api/progress', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update goals');
+      }
+      
+      await fetchProgressData();
+      setShowModal(false);
+      alert('Goals updated successfully!');
+    } catch (err) {
+      alert('Error updating goals: ' + err.message);
     }
   };
 
@@ -99,62 +163,111 @@ function ProgressView() {
           </div>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card nutrition-card">
           <div className="stat-header">
-            <h3>Today's Nutrition</h3>
+            <h3>Today's Nutrition Goals</h3>
           </div>
-          <div className="targets-grid">
-            <div className="target-item calories">
-              <span className="target-label">Calories</span>
-              <div className="progress-bar-container">
-                <div className="progress-bar" style={{width: `${caloriesPercent}%`}}></div>
+          <div className="progress-list">
+            <div className="progress-item">
+              <div className="progress-header">
+                <span className="progress-label">Calories</span>
+                <span className="progress-values">{progressData.consumedCalories} / {progressData.targetDailyCalories} kcal</span>
               </div>
-              <div className="target-values">
-                <span className="consumed">{progressData.consumedCalories}</span>
-                <span className="separator">/</span>
-                <span className="target">{progressData.targetDailyCalories} kcal</span>
+              <div className="progress-bar-wrapper">
+                <div className="progress-bar-fill calories-bar" style={{width: `${caloriesPercent}%`}}></div>
               </div>
-              <span className="remaining">{calcRemaining(progressData.consumedCalories, progressData.targetDailyCalories)} kcal left</span>
             </div>
-            <div className="target-item protein">
-              <span className="target-label">Protein</span>
-              <div className="progress-bar-container">
-                <div className="progress-bar" style={{width: `${proteinPercent}%`}}></div>
+
+            <div className="progress-item">
+              <div className="progress-header">
+                <span className="progress-label">Protein</span>
+                <span className="progress-values">{progressData.consumedProtein} / {progressData.targetDailyProtein} g</span>
               </div>
-              <div className="target-values">
-                <span className="consumed">{progressData.consumedProtein}</span>
-                <span className="separator">/</span>
-                <span className="target">{progressData.targetDailyProtein} g</span>
+              <div className="progress-bar-wrapper">
+                <div className="progress-bar-fill protein-bar" style={{width: `${proteinPercent}%`}}></div>
               </div>
-              <span className="remaining">{calcRemaining(progressData.consumedProtein, progressData.targetDailyProtein)} g left</span>
             </div>
-            <div className="target-item carbs">
-              <span className="target-label">Carbs</span>
-              <div className="progress-bar-container">
-                <div className="progress-bar" style={{width: `${carbsPercent}%`}}></div>
+
+            <div className="progress-item">
+              <div className="progress-header">
+                <span className="progress-label">Carbs</span>
+                <span className="progress-values">{progressData.consumedCarbs} / {progressData.targetDailyCarbs} g</span>
               </div>
-              <div className="target-values">
-                <span className="consumed">{progressData.consumedCarbs}</span>
-                <span className="separator">/</span>
-                <span className="target">{progressData.targetDailyCarbs} g</span>
+              <div className="progress-bar-wrapper">
+                <div className="progress-bar-fill carbs-bar" style={{width: `${carbsPercent}%`}}></div>
               </div>
-              <span className="remaining">{calcRemaining(progressData.consumedCarbs, progressData.targetDailyCarbs)} g left</span>
             </div>
-            <div className="target-item fat">
-              <span className="target-label">Fat</span>
-              <div className="progress-bar-container">
-                <div className="progress-bar" style={{width: `${fatPercent}%`}}></div>
+
+            <div className="progress-item">
+              <div className="progress-header">
+                <span className="progress-label">Fat</span>
+                <span className="progress-values">{progressData.consumedFat} / {progressData.targetDailyFat} g</span>
               </div>
-              <div className="target-values">
-                <span className="consumed">{progressData.consumedFat}</span>
-                <span className="separator">/</span>
-                <span className="target">{progressData.targetDailyFat} g</span>
+              <div className="progress-bar-wrapper">
+                <div className="progress-bar-fill fat-bar" style={{width: `${fatPercent}%`}}></div>
               </div>
-              <span className="remaining">{calcRemaining(progressData.consumedFat, progressData.targetDailyFat)} g left</span>
             </div>
           </div>
         </div>
       </div>
+
+      <div className="modify-goals-section">
+        <button onClick={handleModifyGoals} className="modify-goals-btn">
+          Modify Goals
+        </button>
+      </div>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Modify Your Goals</h3>
+            <form onSubmit={handleSubmit}>
+              <div className="form-section">
+                <h4>Weight Goals</h4>
+                <div className="form-row">
+                  <label>
+                    Current Weight (lbs)
+                    <input type="number" name="currentWeight" value={formData.currentWeight} onChange={handleInputChange} required />
+                  </label>
+                  <label>
+                    Target Weight (lbs)
+                    <input type="number" name="targetWeight" value={formData.targetWeight} onChange={handleInputChange} required />
+                  </label>
+                </div>
+              </div>
+
+              <div className="form-section">
+                <h4>Daily Nutrition Targets</h4>
+                <div className="form-row">
+                  <label>
+                    Calories (kcal)
+                    <input type="number" name="targetDailyCalories" value={formData.targetDailyCalories} onChange={handleInputChange} required />
+                  </label>
+                  <label>
+                    Protein (g)
+                    <input type="number" name="targetDailyProtein" value={formData.targetDailyProtein} onChange={handleInputChange} required />
+                  </label>
+                </div>
+                <div className="form-row">
+                  <label>
+                    Carbs (g)
+                    <input type="number" name="targetDailyCarbs" value={formData.targetDailyCarbs} onChange={handleInputChange} required />
+                  </label>
+                  <label>
+                    Fat (g)
+                    <input type="number" name="targetDailyFat" value={formData.targetDailyFat} onChange={handleInputChange} required />
+                  </label>
+                </div>
+              </div>
+
+              <div className="modal-actions">
+                <button type="button" onClick={handleCloseModal} className="cancel-btn">Cancel</button>
+                <button type="submit" className="save-btn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
