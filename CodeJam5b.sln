@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36705.20 d17.14
@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "codejam5b.client", "codejam5b.client\codejam5b.client.esproj", "{C712517F-B009-4FD5-B023-E3360D749B9B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam5b.Server", "CodeJam5b.Server\CodeJam5b.Server.csproj", "{CDF5755B-26F6-47D6-9A45-A133149F8A03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam5b.Server.Tests", "CodeJam5b.Server.Tests\CodeJam5b.Server.Tests.csproj", "{A6F3A4F6-7D4D-4D4C-9F6F-0EE2F6C80D65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{CDF5755B-26F6-47D6-9A45-A133149F8A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDF5755B-26F6-47D6-9A45-A133149F8A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDF5755B-26F6-47D6-9A45-A133149F8A03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6F3A4F6-7D4D-4D4C-9F6F-0EE2F6C80D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F3A4F6-7D4D-4D4C-9F6F-0EE2F6C80D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F3A4F6-7D4D-4D4C-9F6F-0EE2F6C80D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F3A4F6-7D4D-4D4C-9F6F-0EE2F6C80D65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
