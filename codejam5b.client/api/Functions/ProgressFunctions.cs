@@ -68,14 +68,14 @@ public class ProgressFunctions
         var progress = await _db.progress.OrderBy(p => p.progress_id).FirstOrDefaultAsync();
         if (progress is null)
         {
-            progress = new UserProgress { Id = 1 };
+            progress = new UserProgress { progress_id = 1 };
             _db.progress.Add(progress);
         }
 
-        progress.CurrentWeight = body.CurrentWeight;
-        progress.GoalWeight = body.GoalWeight;
-        progress.CurrentCalories = body.CurrentCalories;
-        progress.GoalCalories = body.GoalCalories;
+        progress.current_weight = body.CurrentWeight;
+        progress.target_weight = body.GoalWeight;
+        progress.consumed_calories = body.CurrentCalories;
+        progress.target_cals = body.GoalCalories;
 
         await _db.SaveChangesAsync();
 
