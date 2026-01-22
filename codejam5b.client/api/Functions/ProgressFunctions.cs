@@ -40,7 +40,7 @@ public class ProgressFunctions
         }
     }
 
-    private record UpdateProgressRequest(double consumedCalories, double consumedCarbs, int consumedFat, int consumedProtein);
+    private record UpdateProgressRequest(int consumedCalories, int consumedCarbs, int consumedFat, int consumedProtein);
 
     [Function("ProgressPut")]
     public async Task<HttpResponseData> ProgressPut(

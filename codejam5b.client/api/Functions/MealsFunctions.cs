@@ -67,7 +67,7 @@ public class MealsFunctions
         {
             name = body.name.Trim(),
             calories = body.calories,
-            date = body.date == default ? DateTime.Today : body.Date
+            date = body.date == default ? DateTime.Today : body.date
         };
 
         _db.meals.Add(meal);
