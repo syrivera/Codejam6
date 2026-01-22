@@ -40,7 +40,7 @@ public class ProgressFunctions
         }
     }
 
-    private record UpdateProgressRequest(double CurrentWeight, double GoalWeight, int CurrentCalories, int GoalCalories);
+    private record UpdateProgressRequest(double consumedCalories, double consumedCarbs, int consumedFat, int consumedProtein);
 
     [Function("ProgressPut")]
     public async Task<HttpResponseData> ProgressPut(
@@ -61,7 +61,7 @@ public class ProgressFunctions
         if (body is null)
         {
             var bad = req.CreateResponse(HttpStatusCode.BadRequest);
-            await bad.WriteStringAsync("Body must include CurrentWeight, GoalWeight, CurrentCalories, GoalCalories.");
+            await bad.WriteStringAsync("Body must include Consumed cals, carbs, fat, & protein.");
             return bad;
         }
 
@@ -72,10 +72,10 @@ public class ProgressFunctions
             _db.progress.Add(progress);
         }
 
-        progress.current_weight = body.CurrentWeight;
-        progress.target_weight = body.GoalWeight;
-        progress.consumed_calories = body.CurrentCalories;
-        progress.target_cals = body.GoalCalories;
+        progress.consumed_cals = body.consumedCalories;
+        progress.consumed_carbs = body.consumedCarbs;
+        progress.consumed_fat = body.consumedFat;
+        progress.consumed_protein = body.consumedProtein;
 
         await _db.SaveChangesAsync();
 

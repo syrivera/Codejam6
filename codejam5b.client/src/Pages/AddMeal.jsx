@@ -50,7 +50,7 @@ function AddMeal() {
 
       // Update user progress with the meal nutrients
       try {
-        const progressResponse = await fetch('/api/progress/add-meal', {
+        const progressResponse = await fetch('/api/progress', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
