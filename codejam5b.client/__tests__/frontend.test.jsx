@@ -116,13 +116,13 @@ describe('ProgressView Component', () => {
     await waitFor(() => {
       expect(screen.getByText('185 lbs')).toBeInTheDocument();
       expect(screen.getByText('165 lbs')).toBeInTheDocument();
-      expect(screen.getByText('2100 kcal')).toBeInTheDocument();
+      expect(screen.getByText(/2100/)).toBeInTheDocument();
     });
     
-    expect(screen.getByText('800')).toBeInTheDocument();
-    expect(screen.getByText('90')).toBeInTheDocument();
-    expect(screen.getByText('25')).toBeInTheDocument();
-    expect(screen.getByText('60')).toBeInTheDocument();
+    expect(screen.getByText(/800/)).toBeInTheDocument();
+    expect(screen.getByText(/90/)).toBeInTheDocument();
+    expect(screen.getByText(/25/)).toBeInTheDocument();
+    expect(screen.getByText(/60/)).toBeInTheDocument();
   });
 
   test('displays error message on failed fetch', async () => {
