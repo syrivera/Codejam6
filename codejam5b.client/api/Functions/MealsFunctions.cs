@@ -27,7 +27,7 @@ public class MealsFunctions
             return bad;
         }
 
-        var results = await _db.Meals
+        var results = await _db.meals
             .Where(m => EF.Functions.ILike(m.Name, $"%{name}%"))
             .OrderByDescending(m => m.Date)
             .Take(50)
@@ -70,7 +70,7 @@ public class MealsFunctions
             Date = body.Date == default ? DateTime.Today : body.Date
         };
 
-        _db.Meals.Add(meal);
+        _db.meals.Add(meal);
         await _db.SaveChangesAsync();
 
         var created = req.CreateResponse(HttpStatusCode.Created);
