@@ -28,8 +28,8 @@ public class MealsFunctions
         }
 
         var results = await _db.meals
-            .Where(m => EF.Functions.ILike(m.Name, $"%{name}%"))
-            .OrderByDescending(m => m.Date)
+            .Where(m => EF.Functions.ILike(m.name, $"%{name}%"))
+            .OrderByDescending(m => m.meal_id)
             .Take(50)
             .ToListAsync();
 
@@ -65,9 +65,9 @@ public class MealsFunctions
 
         var meal = new Meal
         {
-            Name = body.Name.Trim(),
-            Calories = body.Calories,
-            Date = body.Date == default ? DateTime.Today : body.Date
+            name = body.Name.Trim(),
+            calories = body.Calories,
+            date = body.Date == default ? DateTime.Today : body.Date
         };
 
         _db.meals.Add(meal);
