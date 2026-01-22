@@ -2,9 +2,9 @@ namespace Api.Models;
 
 public class UserProgress
 {
-    public int Id { get; set; }
-    public double CurrentWeight { get; set; }
-    public double GoalWeight { get; set; }
-    public int CurrentCalories { get; set; }
-    public int GoalCalories { get; set; }
+    public int progress_id { get; set; }
+    public double current_weight { get; set; }
+    public double target_weight { get; set; }
+    public int consumed_calories { get; set; }
+    public int target_cals { get; set; }
 }
