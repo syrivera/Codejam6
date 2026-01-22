@@ -8,6 +8,9 @@ var host = new HostBuilder()
     .ConfigureServices(services =>
     {
         var conn = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+
+        console.log(conn);
+
         if (string.IsNullOrWhiteSpace(conn))
             throw new InvalidOperationException("Missing ConnectionStrings__DefaultConnection.");
 

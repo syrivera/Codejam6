@@ -17,7 +17,18 @@ public class ProgressFunctions
     public async Task<HttpResponseData> ProgressGet(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "progress")] HttpRequestData req)
     {
-        var progress = await _db.Progress.OrderBy(p => p.Id).FirstOrDefaultAsync();
+        try
+        {
+           var progress = await _db.Progress.OrderBy(p => p.Id).FirstOrDefaultAsync();
+        }
+
+        catch (Exception err)
+        {
+            var res = req.CreateResponse(HttpStatusCode.InternalServerError);
+            await res.WriteStringAsync($"Error retrieving progress: {err.Message}");
+            return res;
+        }
+
         if (progress is null)
         {
             var nf = req.CreateResponse(HttpStatusCode.NotFound);
