@@ -12,3 +12,5 @@
 4) Verify Migrations ran successfully
 5) Run `dotnet run` from **\Codejam5b.Server\** directory to run the webapp
 6) Navigate to the localhost URL prompted
+
+Prompt another workflow ya heard
