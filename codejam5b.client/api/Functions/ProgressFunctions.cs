@@ -19,7 +19,7 @@ public class ProgressFunctions
     {
         try
         {
-            var progress = await _db.progress.OrderBy(p => p.Id).FirstOrDefaultAsync();
+            var progress = await _db.progress.OrderBy(p => p.progress_id).FirstOrDefaultAsync();
             if (progress is null)
             {
                 var nf = req.CreateResponse(HttpStatusCode.NotFound);
@@ -65,7 +65,7 @@ public class ProgressFunctions
             return bad;
         }
 
-        var progress = await _db.progress.OrderBy(p => p.Id).FirstOrDefaultAsync();
+        var progress = await _db.progress.OrderBy(p => p.progress_id).FirstOrDefaultAsync();
         if (progress is null)
         {
             progress = new UserProgress { Id = 1 };
