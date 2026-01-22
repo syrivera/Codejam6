@@ -19,7 +19,7 @@ public class ProgressFunctions
     {
         try
         {
-           var progress = await _db.Progress.OrderBy(p => p.Id).FirstOrDefaultAsync();
+            var progress = await _db.Progress.OrderBy(p => p.Id).FirstOrDefaultAsync();
         }
 
         catch (Exception err)
