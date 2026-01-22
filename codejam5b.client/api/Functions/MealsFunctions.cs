@@ -27,14 +27,18 @@ public class MealsFunctions
             return bad;
         }
 
-        var results = await _db.meals
-            .Where(m => EF.Functions.ILike(m.name, $"%{name}%"))
-            .OrderByDescending(m => m.meal_id)
-            .Take(50)
-            .ToListAsync();
+        var q = _db.meals
+               .Where(m => EF.Functions.ILike(m.name, $"%{name}%"))
+               .OrderByDescending(m => m.meal_id)
+               .Take(50);
+
+        // This will show you exactly what EF is trying to run on Postgres
+        var sql = q.ToQueryString();
+
+        var results = await q.ToListAsync();
 
         var ok = req.CreateResponse(HttpStatusCode.OK);
-        await ok.WriteAsJsonAsync(results);
+        await ok.WriteAsJsonAsync(new { sql, results });
         return ok;
     }
 

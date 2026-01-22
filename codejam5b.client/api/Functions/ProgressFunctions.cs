@@ -72,7 +72,7 @@ public class ProgressFunctions
             _db.progress.Add(progress);
         }
 
-        progress.consumed_cals = body.consumedCalories;
+        progress.consumed_calories = body.consumedCalories;
         progress.consumed_carbs = body.consumedCarbs;
         progress.consumed_fat = body.consumedFat;
         progress.consumed_protein = body.consumedProtein;

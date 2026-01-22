@@ -16,7 +16,7 @@ public class UserProgress
     public int target_fat { get; set; }
     public int target_protein { get; set; }
 
-    public int consumed_cals { get; set; }
+    public int consumed_calories { get; set; }
     public int consumed_carbs { get; set; }
     public int consumed_fat { get; set; }
     public int consumed_protein { get; set; }
