@@ -1,2 +1,3 @@
 C:\Users\jmfefoe\OneDrive - JM Family Enterprises\ITSAcademyProj\CodeJam5b\Codejam5\codejam5b.client\obj\Debug\codejam5b.client.esproj.CoreCompileInputs.cache
 C:\Users\jmfaryl\Codejam5-1\codejam5b.client\obj\Debug\codejam5b.client.esproj.CoreCompileInputs.cache
+C:\Users\jmfrhta\source\repos\Codejam6\codejam5b.client\obj\Debug\codejam5b.client.esproj.CoreCompileInputs.cache
