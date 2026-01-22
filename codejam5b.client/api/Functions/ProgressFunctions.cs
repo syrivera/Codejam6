@@ -20,25 +20,24 @@ public class ProgressFunctions
         try
         {
             var progress = await _db.Progress.OrderBy(p => p.Id).FirstOrDefaultAsync();
-        }
+            if (progress is null)
+            {
+                var nf = req.CreateResponse(HttpStatusCode.NotFound);
+                await nf.WriteStringAsync("No progress record found.");
+                return nf;
+            }
 
+            var ok = req.CreateResponse(HttpStatusCode.OK);
+            await ok.WriteAsJsonAsync(progress);
+            return ok;
+        }
+        
         catch (Exception err)
         {
             var res = req.CreateResponse(HttpStatusCode.InternalServerError);
             await res.WriteStringAsync($"Error retrieving progress: {err.Message}");
             return res;
         }
-
-        if (progress is null)
-        {
-            var nf = req.CreateResponse(HttpStatusCode.NotFound);
-            await nf.WriteStringAsync("No progress record found.");
-            return nf;
-        }
-
-        var ok = req.CreateResponse(HttpStatusCode.OK);
-        await ok.WriteAsJsonAsync(progress);
-        return ok;
     }
 
     private record UpdateProgressRequest(double CurrentWeight, double GoalWeight, int CurrentCalories, int GoalCalories);
