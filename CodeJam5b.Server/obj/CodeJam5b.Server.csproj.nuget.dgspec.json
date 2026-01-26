@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jmfaryl\\Codejam5-1\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {}
+    "C:\\Users\\jmfdusq\\Downloads\\code-jams\\reviews\\Codejam6\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jmfaryl\\Codejam5-1\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {
+    "C:\\Users\\jmfdusq\\Downloads\\code-jams\\reviews\\Codejam6\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jmfaryl\\Codejam5-1\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
+        "projectUniqueName": "C:\\Users\\jmfdusq\\Downloads\\code-jams\\reviews\\Codejam6\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
         "projectName": "CodeJam5b.Server",
-        "projectPath": "C:\\Users\\jmfaryl\\Codejam5-1\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
-        "packagesPath": "C:\\Users\\jmfaryl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jmfaryl\\Codejam5-1\\CodeJam5b.Server\\obj\\",
+        "projectPath": "C:\\Users\\jmfdusq\\Downloads\\code-jams\\reviews\\Codejam6\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
+        "packagesPath": "C:\\Users\\jmfdusq\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jmfdusq\\Downloads\\code-jams\\reviews\\Codejam6\\CodeJam5b.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\jmfaryl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jmfdusq\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -98,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -57,6 +57,10 @@ namespace CodeJam5b.Server.Controllers
             var progress = await _db.Progress.FirstOrDefaultAsync();
             if (progress is null) return NotFound();
             
+            // if two requests hit at midnight simultaneously,
+            // both read old date, both reset, one overwrites the other's meal additions.
+            // Also: GET endpoint has side effects (writes to DB) which violates REST principles.
+            // You could Move reset logic to a scheduled background job or use database-level date checks.
             // Reset consumed values if it's a new day
             var today = DateTime.UtcNow.Date;
             if (progress.LastUpdated.Date != today)
@@ -119,12 +123,17 @@ namespace CodeJam5b.Server.Controllers
             return NoContent();
         }
 
+        // REVIEW CRITICAL: This endpoint is routed to /api/progress/add-meal but frontend calls POST /api/progress
+        // This endpoint will NEVER be reached. Frontend calls fail with 405 Method Not Allowed.
+        // FIX: Change route to [HttpPost] or update frontend to call /api/progress/add-meal
         [HttpPost("add-meal")]
         public async Task<ActionResult<ProgressData>> AddMealNutrients(AddMealNutrientsRequest body)
         {
             var progress = await _db.Progress.FirstOrDefaultAsync();
             if (progress is null) return NotFound("Progress record not found");
 
+            // REVIEW CRITICAL: Same race condition as in Get() method. Duplicate reset logic in multiple places.
+            // FIX: Centralize this logic in one place to avoid inconsistency.
             // Reset consumed values if it's a new day
             var today = DateTime.UtcNow.Date;
             if (progress.LastUpdated.Date != today)
