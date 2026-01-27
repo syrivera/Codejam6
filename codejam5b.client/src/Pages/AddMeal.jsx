@@ -33,6 +33,8 @@ function AddMeal() {
     };
     
     try {
+      // Well structured API call to add meal
+      // Routes are easy t ounderstand and maintain
       const response = await fetch('/api/meals', {
         method: 'POST',
         headers: {
@@ -50,6 +52,7 @@ function AddMeal() {
 
       // Update user progress with the meal nutrients
       try {
+        // Http methods could be a bit more descriptive - For example, /get-progress or /add-progress
         const progressResponse = await fetch('/api/progress', {
           method: 'POST',
           headers: {
