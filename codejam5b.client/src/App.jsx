@@ -8,6 +8,7 @@ function App() {
 
     const [meals, setMeals] = useState();
 
+    // App is simple and cleanly structured - easy to understand the components
     return (
         <div>
             <h1 id="tableLabel">🍽️Meal Tracker</h1>
